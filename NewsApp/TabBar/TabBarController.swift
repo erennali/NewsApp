@@ -34,7 +34,7 @@ private extension TabBarController {
         let homeVC = createNav(
             with: "News",
             and: UIImage(systemName: "newspaper.fill"),
-            viewController: HomeViewController()
+            viewController: NewsViewController()
         )
         let settingsVC = createNav(
             with: "Settings",
