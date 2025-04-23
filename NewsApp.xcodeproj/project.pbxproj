@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BAC797CC2D84CAFB00DB9063 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BAC797CB2D84CAFB00DB9063 /* SnapKit */; };
+		BAF0323F2DB8E1DE0014EB62 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BAF0323E2DB8E1DE0014EB62 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAF0323F2DB8E1DE0014EB62 /* Kingfisher in Frameworks */,
 				BAC797CC2D84CAFB00DB9063 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +86,7 @@
 			name = NewsApp;
 			packageProductDependencies = (
 				BAC797CB2D84CAFB00DB9063 /* SnapKit */,
+				BAF0323E2DB8E1DE0014EB62 /* Kingfisher */,
 			);
 			productName = NewsApp;
 			productReference = BA7645392D7B6EF30078059A /* NewsApp.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				BAC797CA2D84CAFB00DB9063 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				BAF0323D2DB8E1DE0014EB62 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BA76453A2D7B6EF30078059A /* Products */;
@@ -356,6 +360,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		BAF0323D2DB8E1DE0014EB62 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -363,6 +375,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BAC797CA2D84CAFB00DB9063 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		BAF0323E2DB8E1DE0014EB62 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BAF0323D2DB8E1DE0014EB62 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -22,6 +22,8 @@ final class NewsViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(NewsCell.self, forCellReuseIdentifier: NewsCell.identifier)
+        tableView.rowHeight = 180
         return tableView
     }()
     
@@ -78,8 +80,22 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        /*guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.identifier, for: indexPath) as?
+                NewsCell else {
+            fatalError("Unable to dequeue cell")
+        }
+        */
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.identifier, for: indexPath) as! NewsCell
+        cell.configure(with: viewModel.articles[indexPath.row])
         cell.textLabel?.text = viewModel.articles[indexPath.row].title
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedArticle = viewModel.articles[indexPath.row]
+        let detailsVM = DetailsViewModel(article: selectedArticle)
+        let detailsViewController = DetailsViewController(viewModel: detailsVM)
+        navigationController?.pushViewController(detailsViewController, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
