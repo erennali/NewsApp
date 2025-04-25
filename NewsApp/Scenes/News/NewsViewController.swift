@@ -80,14 +80,9 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        /*guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.identifier, for: indexPath) as?
-                NewsCell else {
-            fatalError("Unable to dequeue cell")
-        }
-        */
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.identifier, for: indexPath) as! NewsCell
         cell.configure(with: viewModel.articles[indexPath.row])
-        cell.textLabel?.text = viewModel.articles[indexPath.row].title
         return cell
     }
     

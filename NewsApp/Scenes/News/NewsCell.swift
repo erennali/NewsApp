@@ -28,9 +28,9 @@ class NewsCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .headline)
         label.textColor = .label
         label.numberOfLines = 2
+        label.font = .preferredFont(forTextStyle: .headline)
         return label
     }()
     
@@ -108,7 +108,7 @@ private extension NewsCell {
         }
         dateLabel.snp.makeConstraints {
             $0.leading.equalTo(newsImageView.snp.trailing).offset(12)
-            $0.top.equalTo(newsImageView.snp.bottom).offset(12)
+            $0.top.equalTo(authorLabel.snp.bottom).offset(12)
             $0.height.equalTo(24)
         }
         
