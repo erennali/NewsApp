@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    private let themeKey = "selectedTheme"
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -18,10 +18,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         let splashVC = SplashViewController()
+        
+        applySavedTheme()
+        
         window.rootViewController = splashVC
         window.makeKeyAndVisible()
         
     }
+    
+    private func applySavedTheme() {
+        let themeMode = UserDefaults.standard.integer(forKey: themeKey)
+            switch themeMode {
+            case 0:
+                window?.overrideUserInterfaceStyle = .unspecified
+            case 1:
+                window?.overrideUserInterfaceStyle = .light
+            case 2:
+                window?.overrideUserInterfaceStyle = .dark
+            default:
+                window?.overrideUserInterfaceStyle = .unspecified
+            }
+        }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
