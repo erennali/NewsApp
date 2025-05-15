@@ -9,8 +9,16 @@ import UIKit
 import StoreKit
 import SafariServices
 
+
+protocol SettingsViewControllerProtocol: AnyObject {
+    func updateSwitchValue(_ value: Bool)
+    func openAppSettings()
+}
+    
+
 final class SettingsViewController: UIViewController {
 
+    
     
     // MARK: Properties
     
@@ -26,6 +34,8 @@ final class SettingsViewController: UIViewController {
         return tableView
     }()
     
+    private let switcher = UISwitch()
+    
     private let appVersionLabel: UILabel = {
         let label = UILabel()
         label.text = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
@@ -38,6 +48,7 @@ final class SettingsViewController: UIViewController {
     init(viewModel: SettingsViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        viewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -168,7 +179,9 @@ extension SettingsViewController: UITableViewDataSource {
             
         case .notification:
             let switcher = UISwitch()
-            viewModel.fetchNotificationStatus { switcher.isOn = $0 }
+            viewModel.fetchNotificationStatus { [weak self] in
+                self?.switcher.isOn = $0
+            }
             switcher.addTarget(self, action: #selector(didToggleNotification(_:)), for: .valueChanged)
             cell.accessoryView = switcher
             
@@ -181,3 +194,25 @@ extension SettingsViewController: UITableViewDataSource {
     
 }
 
+extension SettingsViewController: SettingsViewControllerProtocol {
+    func openAppSettings() {
+        if let settingsURL = URL(
+            string: UIApplication.openSettingsURLString
+        ),UIApplication.shared
+            .canOpenURL(settingsURL){ DispatchQueue.main.async {
+                UIApplication.shared.open(
+                    settingsURL,
+                    options: [:],
+                    completionHandler: nil
+                )
+            }
+        }
+            
+    }
+    
+    func updateSwitchValue(_ value: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.switcher.isOn = value
+        }
+    }
+}
