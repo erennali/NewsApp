@@ -18,6 +18,14 @@ final class NewsViewController: UIViewController {
     //MARK: Properties
     private let viewModel: NewsViewModel
     
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.searchBar.placeholder = "Search News"
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        return searchController
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
@@ -49,6 +57,7 @@ final class NewsViewController: UIViewController {
 private extension NewsViewController {
     func configureView() {
         view.backgroundColor = .systemBackground
+        navigationItem.searchController = searchController
         addViews()
         configureLayout()
     }
@@ -92,5 +101,20 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
         let detailsViewController = DetailsViewController(viewModel: detailsVM)
         navigationController?.pushViewController(detailsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension NewsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            viewModel.search(term: "")
+        } else if searchText.count >= 3 {
+            viewModel.search(term: searchText)
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.search(term: "")
+        
     }
 }
