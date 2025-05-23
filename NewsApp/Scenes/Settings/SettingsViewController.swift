@@ -30,11 +30,12 @@ final class SettingsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        //tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         return tableView
     }()
     
-    private let switcher = UISwitch()
+    //private let switcher= UISwitch()
+    private var notificationSwitch: UISwitch?
     
     private let appVersionLabel: UILabel = {
         let label = UILabel()
@@ -179,8 +180,12 @@ extension SettingsViewController: UITableViewDataSource {
             
         case .notification:
             let switcher = UISwitch()
-            viewModel.fetchNotificationStatus { [weak self] in
-                self?.switcher.isOn = $0
+            
+            notificationSwitch = switcher
+            
+            viewModel.fetchNotificationStatus {
+                
+                switcher.isOn = $0
             }
             switcher.addTarget(self, action: #selector(didToggleNotification(_:)), for: .valueChanged)
             cell.accessoryView = switcher
@@ -212,7 +217,7 @@ extension SettingsViewController: SettingsViewControllerProtocol {
     
     func updateSwitchValue(_ value: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.switcher.isOn = value
+            self?.notificationSwitch?.isOn = value
         }
     }
 }
