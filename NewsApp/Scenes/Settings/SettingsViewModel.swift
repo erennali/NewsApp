@@ -20,7 +20,8 @@ class SettingsViewModel {
     weak var delegate: SettingsViewControllerProtocol?
     
     init() {
-        // Initialization code if needed
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleReturnFromSettings), name: .didReturnFromSettings, object: nil)
     }
     
     
@@ -51,4 +52,16 @@ class SettingsViewModel {
      func fetchNotificationStatus(completion: @escaping (Bool) -> Void) {
           completion(notificationManager.isAuthorized)
      }
+     @objc func handleReturnFromSettings() {
+            Task {
+                await notificationManager.updateNotificationStatus()
+                delegate?.updateSwitchValue(notificationManager.isAuthorized)
+            }
+        }
+     
+     
+}
+
+extension Notification.Name {
+    static let didReturnFromSettings = Notification.Name("didReturnFromSettings") 
 }

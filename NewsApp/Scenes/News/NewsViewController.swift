@@ -102,6 +102,13 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(detailsViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // eğer ekranın en altında isek son haberde isek
+        if indexPath.row == viewModel.articles.count - 1 {
+            viewModel.loadMore()
+        }
+    }
 }
 
 extension NewsViewController: UISearchBarDelegate {
